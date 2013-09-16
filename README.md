@@ -58,6 +58,9 @@ extra-data : {
 
 ```
 
+This format will be used to illustrate a HTTP call and its [payload](http://en.wikipedia.org/wiki/POST_(HTTP)#Posting_data). Everything below `------` should be its `form data`.
+
+
 ### Output format
 All returned output will be under this format :  
 
@@ -73,6 +76,22 @@ All returned output will be under this format :
 ```
 
 The `<data>` tag is used to return main data  (i.e, song list, etc.) and the `<extra-data>` tag is used to return extra information that your client and server will understand in the case you want to implement extra functionnality that might not be supported by other clients.
+
+#### Serialization format
+By default, the exchange format will be `xml` since the information returned by vlcj is already in this format.  
+
+You could perform a `OPTIONS` request on any endpoint to see what serialization type is supported by the server by checking its response.
+
+##### Output example
+The output will be text based and easy to decode.
+
+```
+accept-format:xml,json
+application-key:XXXXXXXXXXXXX
+extra-features:aaa,bbb,ccc,...
+```
+The `extra-features` should be a list of extra features your server implement. The `application-key` is the key to use when looking for `extra-data` in the response. That way, everyone could try to be compatible with others.
+
 
 ### Status code
 All successful call will result in a `HTTP 200` for the response status code. If a resource is unavailable or doesn't exist (i.e, fetching a song with the wrong id, or trying to play a song that doesn't exist), the server should answer with a `HTTP 404`. For other errors, the server should return a `HTTP 500`. You can return extra data about the error in the `extra-data` part of your response if you want, but the HTTP status should be enough to identify what type of error you are facing (maybe not `HTTP 500`, but it could be anything and you should check your server, it should not happen).
@@ -267,3 +286,10 @@ This should be the current song or video that is playing plus information about 
 
 ##### Notes
 You could poll this endpoint periodically to synchronize your player with the server. For example, if you want to display a seek bar and you want it to be in sync, just fetch the `play-time` and adjust your seek bar in consequence, but don't forget to take response time in account. It should be different when we will read the actual stream because it should provide a set of accurate information about that.
+
+#### Play a media
+URL
+:   `/player/`
+HTTP Method
+:    `POST`
+
