@@ -126,7 +126,6 @@ The expected output should be a list of MP3 metadata that is given by vlcj.
             ...
         </extra-data>
     </response>
-
 ```
 
 
@@ -155,7 +154,6 @@ The expected output should be the representation of one song has given by vlcj.
             ...
         </extra-data>
     </response>
-
 ```
 
 ### Video
@@ -191,7 +189,6 @@ The expected output should be a list of video metadata that is given by vlcj.
             ...
         </extra-data>
     </response>
-
 ```
 
 
@@ -220,7 +217,6 @@ The expected output should be the representation of one video has given by vlcj.
             ...
         </extra-data>
     </response>
-
 ```
 
 ### Player
@@ -232,3 +228,40 @@ URL
 
 HTTP Method
 :   `HEAD`
+
+##### Expected input
+None
+
+##### Expected output
+This should be the current song or video that is playing plus information about time left and what is the next item in the playlist if any. It should be empty if not playing.
+
+##### Example
+
+```xml
+    <response>
+        <data>
+            <song id="{ID}">
+                {MUSIC MODEL REPRESENTATION}
+            </song>
+            OR
+            <video id="{ID}">
+                {VIDEO MODEL REPRESENTATION}
+            </video>
+            OR EMPTY
+            <play-info>
+                <media-length>HH:MM:SS</media-length> // length of the media being played
+                <play-time>HH:MM:SS</play-time> // what part the player is reading
+                <next-media>
+                    <type>VIDEO/SONG</type>
+                    <id>{ID}</id>
+                </next-media>
+            </play-info>
+        </data>
+        <extra-data>
+            ...
+        </extra-data>
+    </response>
+```
+
+##### Notes
+You could poll this endpoint periodically to synchronize your player with the server. For example, if you want to display a seek bar and you want it to be in sync, just fetch the `play-time` and adjust your seek bar in consequence, but don't forget to take response time in account. It should be different when we will read the actual stream because it should provide a set of accurate information about that.
