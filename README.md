@@ -241,14 +241,14 @@ The expected output should be the representation of one video has given by vlcj.
 ```
 
 ### Player
-The player is more a controller than a model, but it will look like a REST endpoint too.
+The player is more a controller than a model, but it will look like a REST endpoint too. This spec won't specify the behavior your server is supposed to have. For example, if you choose that *playing* a media clears the playlist, that's your choice. Another team could choose to just jump to the song in the current playlist if found in it.
 
 #### Get the player status
 URL
 :   `/player/`
 
 HTTP Method
-:   `HEAD`
+:   `GET`
 
 ##### Expected input
 None
@@ -290,6 +290,66 @@ You could poll this endpoint periodically to synchronize your player with the se
 #### Play a media
 URL
 :   `/player/`
-HTTP Method
-:    `POST`
 
+HTTP Method
+:   `POST`
+
+##### Expected input
+The expected input must contain the action to execute (`play`), the type, and the id of the media to be played.
+
+###### Example
+```
+POST
+----
+action: play
+type: video
+id: 1
+```
+
+##### Expected output
+None.
+
+#### Stop the player
+URL
+:   `/player/`
+
+HTTP Method
+:   `POST`
+
+##### Expected input
+The expected input must contain the action to execute (`stop`).
+
+##### Expected output
+None.
+
+#### Play previous/next media
+URL
+:   `/player/`
+
+HTTP Method
+:   `POST`
+
+##### Expected input
+The expected input must contain the action to execute (`previous` / `next`).
+
+##### Expected output
+The expected output should be the representation of one media has given by vlcj.
+
+##### Example
+
+```xml
+    <response>
+        <data>
+            <song id="{ID}">
+                {MUSIC MODEL REPRESENTATION}
+            </song>
+            OR
+            <video id="{ID}">
+                {VIDEO MODEL REPRESENTATION}
+            </video>
+        </data>
+        <extra-data>
+            ...
+        </extra-data>
+    </response>
+```
