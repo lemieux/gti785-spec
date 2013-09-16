@@ -409,7 +409,7 @@ id: 1
 ##### Expected output
 None.
 
-#### Remove a media to the playlist
+#### Remove a media from the playlist
 URL
 :   `/playlist/`
 
