@@ -332,6 +332,13 @@ HTTP Method
 ##### Expected input
 The expected input must contain the action to execute (`previous` / `next`).
 
+###### Example
+```
+POST
+----
+action: next
+```
+
 ##### Expected output
 The expected output should be the representation of one media has given by vlcj. It should return a `HTTP 404` if the player has nothing to play.
 
