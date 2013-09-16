@@ -74,6 +74,8 @@ All returned output will be under this format :
 
 The `<data>` tag is used to return main data  (i.e, song list, etc.) and the `<extra-data>` tag is used to return extra information that your client and server will understand in the case you want to implement extra functionnality that might not be supported by other clients.
 
+### Status code
+All successful call will result in a `HTTP 200` for the response status code. If a resource is unavailable or doesn't exist (i.e, fetching a song with the wrong id, or trying to play a song that doesn't exist), the server should answer with a `HTTP 404`. For other errors, the server should return a `HTTP 500`. You can return extra data about the error in the `extra-data` part of your response if you want, but the HTTP status should be enough to identify what type of error you are facing (maybe not `HTTP 500`, but it could be anything and you should check your server, it should not happen).
 
 ## Model representation
 
