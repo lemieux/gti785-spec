@@ -333,7 +333,7 @@ HTTP Method
 The expected input must contain the action to execute (`previous` / `next`).
 
 ##### Expected output
-The expected output should be the representation of one media has given by vlcj.
+The expected output should be the representation of one media has given by vlcj. It should return a `HTTP 404` if the player has nothing to play.
 
 ##### Example
 
@@ -353,3 +353,82 @@ The expected output should be the representation of one media has given by vlcj.
         </extra-data>
     </response>
 ```
+
+### Playlist
+A playlist can contain different type of media.
+
+#### Get the playlist
+URL
+:   `/playlist/`
+
+HTTP Method
+:   `GET`
+
+##### Expected input
+None.
+
+##### Expected output
+A list of media that is currently in the playlist.
+
+##### Example
+```xml
+    <response>
+        <data>
+            <medias>
+                <media>
+                    <type>{TYPE}</type>
+                    <id>{ID}</id>
+                </media>
+                ...
+            </medias>
+        </data>
+        <extra-data>
+            ...
+        </extra-data>
+    </response>
+```
+
+#### Add a media to the playlist
+URL
+:   `/playlist/`
+
+HTTP Method
+:   `POST`
+
+##### Expected input
+The expected input must contain the type, and the id of the media to be played.
+
+###### Example
+```
+POST
+----
+type: video
+id: 1
+```
+
+##### Expected output
+None.
+
+#### Remove a media to the playlist
+URL
+:   `/playlist/`
+
+HTTP Method
+:   `DELETE`
+
+##### Expected input
+The expected input must contain the type, and the id of the media to be played.
+
+###### Example
+```
+DELETE
+----
+type: video
+id: 1
+```
+
+##### Expected output
+None.
+
+##### Notes
+To clear the playlist, just pass `any` in the `type` parameter and the `id` can be left out.
