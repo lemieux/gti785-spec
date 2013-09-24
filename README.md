@@ -424,7 +424,7 @@ HTTP Method
 :   `DELETE`
 
 ##### Expected input
-The expected input must contain the type, and the id of the media to be played.
+The expected input must contain the type, and the id of the media to be deleted.
 
 ###### Example
 ```
