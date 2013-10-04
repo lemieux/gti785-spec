@@ -306,13 +306,12 @@ A list of media that is currently in the playlist.
 ```xml
     <response>
         <data>
-            <medias>
-                <media>
-                    <type>{TYPE}</type>
-                    <id>{ID}</id>
-                </media>
+            <songs>
+                <song>
+                    ...
+                </song>
                 ...
-            </medias>
+            </songs>
         </data>
         <extra-data>
             ...
@@ -334,7 +333,6 @@ The expected input must contain the type, and the id of the media to be played.
 ```
 POST
 ----
-type: music
 id: 1
 ```
 
@@ -355,7 +353,6 @@ The expected input must contain the type, and the id of the media to be deleted.
 ```
 DELETE
 ----
-type: music
 id: 1
 ```
 
@@ -363,4 +360,4 @@ id: 1
 None.
 
 ##### Notes
-To clear the playlist, just pass `any` in the `type` parameter and the `id` can be left out.
+To clear the playlist, just pass `*` in the `id` parameter.
