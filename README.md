@@ -81,32 +81,16 @@ The `<data>` tag is used to return main data  (i.e, song list, etc.) and the `<e
 #### Serialization format
 By default, the exchange format will be `xml` since the information returned by vlcj is already in this format.
 
-You could perform a `OPTIONS` request on any endpoint to see what serialization type is supported by the server by checking its response.
-
-##### Output example
-The output will be text based and easy to decode.
-
-```
-accept-format:xml,json
-application-key:XXXXXXXXXXXXX
-extra-features:aaa,bbb,ccc,...
-```
-The `extra-features` should be a list of extra features your server implement. The `application-key` is the key to use when looking for `extra-data` in the response. That way, everyone could try to be compatible with others.
-
 
 ### Status code
 All successful call will result in a `HTTP 200` for the response status code. If a resource is unavailable or doesn't exist (i.e, fetching a song with the wrong id, or trying to play a song that doesn't exist), the server should answer with a `HTTP 404`. For other errors, the server should return a `HTTP 500`. You can return extra data about the error in the `extra-data` part of your response if you want, but the HTTP status should be enough to identify what type of error you are facing (maybe not `HTTP 500`, but it could be anything and you should check your server, it should not happen).
+
+You must handle all response other than `HTTP 200` as an error to prevent your client from crashing.
 
 ## Model representation
 
 ### Music
 A song is represented by an id and the metadata returns by vlcj.
-
-#### Example
-TODO : Find an find a snippet of what the data looks like...
-
-### Video
-Not implemented yet.
 
 #### Example
 TODO : Find an find a snippet of what the data looks like...
@@ -186,72 +170,8 @@ The expected output should be the representation of one song has given by vlcj.
 
 ### Video
 
-#### Listing videos
-URL
-:   `/video/`
+We do not support videos.
 
-HTTP Method
-:    `GET`
-
-##### Expected input
-None
-
-##### Expected output
-The expected output should be a list of video metadata that is given by vlcj.
-
-###### Example
-```xml
-    <response>
-        <data>
-            <videos>
-                <video>
-                    <id>{ID}</id>
-                    <data>
-                        {VIDEO MODEL REPRESENTATION}
-                    </data>
-                </video>
-                <video>
-                    ...
-                </video>
-                ...
-            </videos>
-        </data>
-        <extra-data>
-            ...
-        </extra-data>
-    </response>
-```
-
-
-#### Get one video
-URL
-:   `/video/{ID}/`
-
-HTTP Method
-:   `GET`
-
-##### Expected input
-None, all parameters are in the URL
-
-##### Expected output
-The expected output should be the representation of one video has given by vlcj.
-
-###### Example
-```xml
-    <response>
-        <data>
-            <video>
-                <id>{ID}</id>>
-                <data>
-                    {VIDEO MODEL REPRESENTATION}
-                </data>
-            </video>
-        </data>
-        <extra-data>
-            ...
-        </extra-data>
-    </response>
-```
 
 ### Player
 The player is more a controller than a model, but it will look like a REST endpoint too. This spec won't specify the behavior your server is supposed to have. For example, if you choose that *playing* a media clears the playlist, that's your choice. Another team could choose to just jump to the song in the current playlist if found in it.
@@ -277,16 +197,12 @@ This should be the current song or video that is playing plus information about 
             <song>
                 ...
             </song>
-            OR
-            <video>
-                ...
-            </video>
-            OR EMPTY
+            OR NOTHING
             <play-info>
                 <media-length>HH:MM:SS</media-length> // length of the media being played
                 <play-time>HH:MM:SS</play-time> // what part the player is reading
                 <next-media>
-                    <type>VIDEO/SONG</type>
+                    <type>MUSIC</type>
                     <id>{ID}</id>
                 </next-media>
             </play-info>
@@ -315,7 +231,7 @@ The expected input must contain the action to execute (`play`), the type, and th
 POST
 ----
 action: play
-type: video
+type: music
 id: 1
 ```
 
@@ -360,13 +276,9 @@ The expected output should be the representation of one media has given by vlcj.
 ```xml
     <response>
         <data>
-            <song id="{ID}">
-                {MUSIC MODEL REPRESENTATION}
+            <song>
+                ...
             </song>
-            OR
-            <video id="{ID}">
-                {VIDEO MODEL REPRESENTATION}
-            </video>
         </data>
         <extra-data>
             ...
@@ -422,7 +334,7 @@ The expected input must contain the type, and the id of the media to be played.
 ```
 POST
 ----
-type: video
+type: music
 id: 1
 ```
 
@@ -443,7 +355,7 @@ The expected input must contain the type, and the id of the media to be deleted.
 ```
 DELETE
 ----
-type: video
+type: music
 id: 1
 ```
 
