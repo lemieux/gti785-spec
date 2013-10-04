@@ -3,20 +3,20 @@ Transfer protocol specification
 
 ## General notes
 ### Variables
-Elements like `{ID}` represents variables that will be replaced at runtime.  
+Elements like `{ID}` represents variables that will be replaced at runtime.
 
 #### Examples
 URL
 :   `/music/{ID}/` needs a song ID to be valid.
 
 ### REST
-For convenience, all endpoints must comply to the REST convention. More information is available on [Wikipedia](http://en.wikipedia.org/wiki/Representational_state_transfer).  
+For convenience, all endpoints must comply to the REST convention. More information is available on [Wikipedia](http://en.wikipedia.org/wiki/Representational_state_transfer).
 
-In short, RESTful services build their URL this way :  
+In short, RESTful services build their URL this way :
 
 `/{OBJET_TYPE}/{ID}`
 
-And the HTTP method define the action to be done.  
+And the HTTP method define the action to be done.
 
 PUT (Create)
 :   Create a new instance
@@ -33,20 +33,20 @@ DELETE (Delete)
 
 #### Examples
 
-`GET /music/` will return all songs  
-`GET /music/{ID}` will return one song according to the given ID  
+`GET /music/` will return all songs
+`GET /music/{ID}` will return one song according to the given ID
 `POST /music/{ID}` will update the given instance with the payload that is sent along.
 
 #### Notes
 Since this application is about getting information and sending commands, we should only use `GET` and `POST` on a limited set of URLs.
 
 ### Extra data
-In the case you want to implemented extra stuff, you can add an `extra-data` parameter to your input or your output, so you can add data without polluting the standardized dataset.  
+In the case you want to implemented extra stuff, you can add an `extra-data` parameter to your input or your output, so you can add data without polluting the standardized dataset.
 
 If you use it, you should use an application key to identify your application so our `extra-data` won't be mixed up. You can see an implementation of this principle down below.
 
 ### Input format
-Most of the time, the client won't need to send anything to the server. 
+Most of the time, the client won't need to send anything to the server.
 
 ```
 POST (HTTP headers)
@@ -62,14 +62,15 @@ This format will be used to illustrate a HTTP call and its [payload](http://en.w
 
 
 ### Output format
-All returned output will be under this format :  
+All returned output will be under this format :
 
 ```xml
     <response>
         <data>
             ...
         </data>
-        <extra-data key="{APPLICATION_KEY}">
+        <extra-data>
+            <key>{APPLICATION_KEY}</key>
             ...
         </extra-data>
     </response>
@@ -78,7 +79,7 @@ All returned output will be under this format :
 The `<data>` tag is used to return main data  (i.e, song list, etc.) and the `<extra-data>` tag is used to return extra information that your client and server will understand in the case you want to implement extra functionnality that might not be supported by other clients.
 
 #### Serialization format
-By default, the exchange format will be `xml` since the information returned by vlcj is already in this format.  
+By default, the exchange format will be `xml` since the information returned by vlcj is already in this format.
 
 You could perform a `OPTIONS` request on any endpoint to see what serialization type is supported by the server by checking its response.
 
@@ -134,8 +135,11 @@ The expected output should be a list of MP3 metadata that is given by vlcj.
     <response>
         <data>
             <songs>
-                <song id="{ID}">
-                    {MUSIC MODEL REPRESENTATION}
+                <song>
+                    <id>{ID}</id>
+                    <data>
+                        {MUSIC MODEL REPRESENTATION}
+                    </data>
                 </song>
                 <song>
                     ...
@@ -167,8 +171,11 @@ The expected output should be the representation of one song has given by vlcj.
 ```xml
     <response>
         <data>
-            <song id="{ID}">
-                {MUSIC MODEL REPRESENTATION}
+            <song>
+                <id>{ID}</id>
+                <data>
+                    {MUSIC MODEL REPRESENTATION}
+                </data>
             </song>
         </data>
         <extra-data>
@@ -197,8 +204,11 @@ The expected output should be a list of video metadata that is given by vlcj.
     <response>
         <data>
             <videos>
-                <video id="{ID}">
-                    {VIDEO MODEL REPRESENTATION}
+                <video>
+                    <id>{ID}</id>
+                    <data>
+                        {VIDEO MODEL REPRESENTATION}
+                    </data>
                 </video>
                 <video>
                     ...
@@ -230,8 +240,11 @@ The expected output should be the representation of one video has given by vlcj.
 ```xml
     <response>
         <data>
-            <video id="{ID}">
-                {VIDEO MODEL REPRESENTATION}
+            <video>
+                <id>{ID}</id>>
+                <data>
+                    {VIDEO MODEL REPRESENTATION}
+                </data>
             </video>
         </data>
         <extra-data>
@@ -261,12 +274,12 @@ This should be the current song or video that is playing plus information about 
 ```xml
     <response>
         <data>
-            <song id="{ID}">
-                {MUSIC MODEL REPRESENTATION}
+            <song>
+                ...
             </song>
             OR
-            <video id="{ID}">
-                {VIDEO MODEL REPRESENTATION}
+            <video>
+                ...
             </video>
             OR EMPTY
             <play-info>
