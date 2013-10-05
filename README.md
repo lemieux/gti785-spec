@@ -90,10 +90,17 @@ You must handle all response other than `HTTP 200` as an error to prevent your c
 ## Model representation
 
 ### Music
-A song is represented by an id and the metadata returns by vlcj.
+A song is represented by an id, the title and the artist
 
 #### Example
-TODO : Find an find a snippet of what the data looks like...
+```xml
+    <song>
+        <id>1</id>
+        <title>Foo</title>
+        <artist>Bar</artist>
+    </song>
+```
+
 
 ## HTTP Endpoints
 Here are all HTTP endpoints needed to communicate with the server with the complete details.
@@ -361,3 +368,8 @@ None.
 
 ##### Notes
 To clear the playlist, just pass `*` in the `id` parameter.
+
+
+## Streaming
+We only support music streaming using MP3. The container to use is yet to be defined.
+
