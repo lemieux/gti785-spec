@@ -371,5 +371,28 @@ To clear the playlist, just pass `*` in the `id` parameter.
 
 
 ## Streaming
-We only support music streaming using MP3. The container to use is yet to be defined.
+We only support music streaming using MP3.
 
+### Streaming music
+
+#### Get the music stream
+URL
+:   `/player/`
+
+HTTP Method
+:   `POST`
+
+##### Expected input
+The expected input must contain the type, and the id of the media to be streamed.
+
+###### Example
+```
+POST
+----
+action: stream
+type: music
+id: 1
+```
+
+##### Expected output
+None.
