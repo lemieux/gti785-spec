@@ -240,10 +240,14 @@ POST
 action: play
 type: music
 id: 1
+play-time: 0:00
 ```
 
 ##### Expected output
 None.
+
+##### Notes
+To seek to a specific time, `play-time` can be used to specify the desired time. When not defined, it should defaulted to `0:00` on the server.
 
 #### Stop the player
 URL
