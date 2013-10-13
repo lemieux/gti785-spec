@@ -370,12 +370,10 @@ None.
 To clear the playlist, just pass `*` in the `id` parameter.
 
 
-## Streaming
+### Streaming
 We only support music streaming using MP3.
 
-### Streaming music
-
-#### Get the music stream
+#### Stream a media
 URL
 :   `/player/`
 
@@ -396,3 +394,6 @@ id: 1
 
 ##### Expected output
 None.
+
+##### Notes
+To control (play, stop, next, previous) the stream, you can use the same actions defined earlier. By default, the stream should be configured to play on the port 8888 (eg. 127.0.0.1:8888).
