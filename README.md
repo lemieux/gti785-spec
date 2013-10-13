@@ -396,4 +396,4 @@ id: 1
 None.
 
 ##### Notes
-To control (play, stop, next, previous) the stream, you can use the same actions defined earlier. By default, the stream should be configured to play on the port 8888 (eg. 127.0.0.1:8888).
+To control (play, stop, next, previous) the stream, you can use the same actions defined earlier. By default, the stream should be configured to play on the port 8888 (eg. 127.0.0.1:8888). If the parameter `id` is empty, it should, if playing, stream the current song.
