@@ -348,7 +348,7 @@ None.
 
 #### Remove a media from the playlist
 URL
-:   `/playlist/`
+:   `/playlist/{INDEX}/`
 
 HTTP Method
 :   `DELETE`
@@ -358,16 +358,14 @@ The expected input must contain the type, and the id of the media to be deleted.
 
 ###### Example
 ```
-DELETE
-----
-id: 1
+DELETE /playlist/1/ # to delete an element at the index 0
+
+DELETE /playlist/ # to delete all element
+
 ```
 
 ##### Expected output
 None.
-
-##### Notes
-To clear the playlist, just pass `*` in the `id` parameter.
 
 
 ## Streaming
