@@ -58,7 +58,7 @@ extra-data : {
 
 ```
 
-This format will be used to illustrate a HTTP call and its [payload](http://en.wikipedia.org/wiki/POST_(HTTP)#Posting_data). Everything below `------` should be its `form data`.
+This format will be used to illustrate a HTTP call and its [payload](http://en.wikipedia.org/wiki/POST_\(HTTP\)#Posting_data). Everything below `------` should be its `form data`.
 
 
 ### Output format
