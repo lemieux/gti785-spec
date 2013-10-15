@@ -101,6 +101,17 @@ A song is represented by an id, the title and the artist
     </song>
 ```
 
+### Playlist item
+An item in the playlist is represented by an id and a name.
+
+#### Example
+```xml
+    <item>
+        <id>1</id>
+        <name>Foo Bar</name>
+    </item>
+```
+
 
 ## HTTP Endpoints
 Here are all HTTP endpoints needed to communicate with the server with the complete details.
@@ -127,10 +138,7 @@ The expected output should be a list of MP3 metadata that is given by vlcj.
         <data>
             <songs>
                 <song>
-                    <id>{ID}</id>
-                    <data>
-                        {MUSIC MODEL REPRESENTATION}
-                    </data>
+                    {MUSIC MODEL REPRESENTATION}
                 </song>
                 <song>
                     ...
@@ -163,10 +171,7 @@ The expected output should be the representation of one song has given by vlcj.
     <response>
         <data>
             <song>
-                <id>{ID}</id>
-                <data>
-                    {MUSIC MODEL REPRESENTATION}
-                </data>
+                {MUSIC MODEL REPRESENTATION}
             </song>
         </data>
         <extra-data>
@@ -283,9 +288,9 @@ The expected output should be the representation of one media has given by vlcj.
 ```xml
     <response>
         <data>
-            <song>
-                ...
-            </song>
+            <item>
+                {PLAYLIST ITEM}
+            </item>
         </data>
         <extra-data>
             ...
@@ -313,12 +318,12 @@ A list of media that is currently in the playlist.
 ```xml
     <response>
         <data>
-            <songs>
-                <song>
-                    ...
-                </song>
+            <items>
+                <item>
+                    {PLAYLIST ITEM}
+                </item>
                 ...
-            </songs>
+            </items>
         </data>
         <extra-data>
             ...
