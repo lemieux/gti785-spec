@@ -58,7 +58,7 @@ extra-data : {
 
 ```
 
-This format will be used to illustrate a HTTP call and its [payload](http://en.wikipedia.org/wiki/POST_(HTTP)#Posting_data). Everything below `------` should be its `form data`.
+This format will be used to illustrate a HTTP call and its [payload](http://en.wikipedia.org/wiki/POST_\(HTTP\)#Posting_data). Everything below `------` should be its `form data`.
 
 
 ### Output format
@@ -245,10 +245,14 @@ POST
 action: play
 type: music
 id: 1
+play-time: 0:00
 ```
 
 ##### Expected output
 None.
+
+##### Notes
+To seek to a specific time, `play-time` can be used to specify the desired time. When not defined, it should defaulted to `0:00` on the server.
 
 #### Stop the player
 URL
@@ -353,7 +357,7 @@ None.
 
 #### Remove a media from the playlist
 URL
-:   `/playlist/`
+:   `/playlist/{INDEX}/`
 
 HTTP Method
 :   `DELETE`
@@ -363,8 +367,35 @@ The expected input must contain the type, and the id of the media to be deleted.
 
 ###### Example
 ```
-DELETE
+DELETE /playlist/1/ # to delete an element at the index 0
+
+DELETE /playlist/ # to delete all element
+
+```
+
+##### Expected output
+None.
+
+
+### Streaming
+We only support music streaming using MP3.
+
+#### Stream a media
+URL
+:   `/player/`
+
+HTTP Method
+:   `POST`
+
+##### Expected input
+The expected input must contain the type, and the id of the media to be streamed.
+
+###### Example
+```
+POST
 ----
+action: stream
+type: music
 id: 1
 ```
 
@@ -372,9 +403,4 @@ id: 1
 None.
 
 ##### Notes
-To clear the playlist, just pass `*` in the `id` parameter.
-
-
-## Streaming
-We only support music streaming using MP3. The container to use is yet to be defined.
-
+To control (play, stop, next, previous) the stream, you can use the same actions defined earlier. By default, the stream should be configured to play on the port 8888 (eg. 127.0.0.1:8888). If the parameter `id` is empty, it should, if playing, stream the current song.
