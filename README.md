@@ -101,17 +101,6 @@ A song is represented by an id, the title and the artist
     </song>
 ```
 
-### Playlist item
-An item in the playlist is represented by an id and a name.
-
-#### Example
-```xml
-    <item>
-        <id>1</id>
-        <name>Foo Bar</name>
-    </item>
-```
-
 
 ## HTTP Endpoints
 Here are all HTTP endpoints needed to communicate with the server with the complete details.
@@ -285,22 +274,7 @@ action: next
 ```
 
 ##### Expected output
-The expected output should be the representation of one media has given by vlcj. It should return a `HTTP 404` if the player has nothing to play.
-
-##### Example
-
-```xml
-    <response>
-        <data>
-            <item>
-                {PLAYLIST ITEM}
-            </item>
-        </data>
-        <extra-data>
-            ...
-        </extra-data>
-    </response>
-```
+None.
 
 ### Playlist
 A playlist can contain different type of media.
@@ -322,12 +296,12 @@ A list of media that is currently in the playlist.
 ```xml
     <response>
         <data>
-            <items>
-                <item>
-                    {PLAYLIST ITEM}
-                </item>
+            <songs>
+                <song>
+                    {MUSIC MODEL REPRESENTATION}
+                </song>
                 ...
-            </items>
+            </songs>
         </data>
         <extra-data>
             ...
